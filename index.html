@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="FINOVA — Smart finance management for a clearer financial future.">
+<title>FINOVA — Smart Finance, Better Decisions</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#07111f;--bg2:#0b1728;--card:rgba(255,255,255,.065);
+  --line:rgba(255,255,255,.12);--text:#f7faff;--muted:#9aaac0;
+  --cyan:#32d7ff;--blue:#5d7cff;--purple:#9b6cff;--green:#52e6a4;
+  --orange:#ffad67;--radius:28px;--max:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.container{width:min(var(--max),calc(100% - 40px));margin:auto}
+section{position:relative;padding:120px 0;overflow:hidden}
+.noise{position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:99;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+
+nav{height:78px;position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;border-bottom:1px solid transparent;transition:.35s}
+nav.scrolled{background:rgba(7,17,31,.78);backdrop-filter:blur(20px);border-color:var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;font-family:"Space Grotesk";font-weight:700;font-size:21px;letter-spacing:2px}
+.logo{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--cyan),var(--purple));box-shadow:0 0 30px rgba(50,215,255,.3);font-size:19px;color:white}
+.links{display:flex;gap:30px;color:#aebbd0;font-size:14px}
+.links a{transition:.25s}.links a:hover{color:white}
+.nav-cta,.hero-btn{padding:13px 20px;border-radius:999px;background:linear-gradient(100deg,var(--cyan),var(--blue));font-weight:700;font-size:14px;color:#03101b;box-shadow:0 10px 35px rgba(50,215,255,.18)}
+.menu{display:none;background:none;border:0;color:white;font-size:25px}
+
+.hero{min-height:100vh;padding-top:150px;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0;background:
+radial-gradient(circle at 75% 35%,rgba(93,124,255,.22),transparent 30%),
+radial-gradient(circle at 15% 75%,rgba(50,215,255,.12),transparent 27%),
+linear-gradient(180deg,#07111f,#081526)}
+.grid{position:absolute;inset:0;opacity:.25;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:70px 70px;mask-image:linear-gradient(to bottom,black,transparent 90%)}
+.blob{position:absolute;width:450px;height:450px;border-radius:50%;filter:blur(80px);opacity:.13;background:var(--purple);right:5%;top:15%;animation:drift 9s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(-60px,50px) scale(1.12)}}
+
+.hero-layout{display:grid;grid-template-columns:1.02fr .98fr;gap:60px;align-items:center}
+.eyebrow{display:inline-flex;gap:9px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;padding:8px 13px;color:#b9c7db;font-size:12px;margin-bottom:24px}
+.dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}
+h1{font-family:"Space Grotesk";font-size:clamp(55px,7vw,92px);line-height:.92;letter-spacing:-5px;margin-bottom:28px}
+.gradient-text{background:linear-gradient(100deg,#fff 15%,var(--cyan) 55%,var(--purple));-webkit-background-clip:text;color:transparent}
+.hero-copy{font-size:19px;line-height:1.7;color:var(--muted);max-width:590px}
+.hero-actions{display:flex;gap:14px;margin-top:35px;align-items:center}
+.hero-btn{display:inline-flex;gap:9px;align-items:center;padding:16px 23px}
+.ghost-btn{border:1px solid var(--line);padding:15px 22px;border-radius:999px;color:#d8e0ec;background:rgba(255,255,255,.035);transition:.3s}
+.ghost-btn:hover{background:rgba(255,255,255,.09);transform:translateY(-3px)}
+.hero-note{font-size:12px;color:#728299;margin-top:20px}
+
+.phone-wrap{height:590px;position:relative;display:grid;place-items:center}
+.phone-glow{position:absolute;width:300px;height:300px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));filter:blur(70px);opacity:.25}
+.phone{width:280px;height:565px;border:7px solid #1b2a42;border-radius:42px;background:#0c1728;box-shadow:0 45px 100px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.08);position:relative;z-index:2;transform:rotate(3deg);animation:phoneFloat 5s ease-in-out infinite}
+@keyframes phoneFloat{50%{transform:translateY(-16px) rotate(-1deg)}}
+.phone:before{content:"";position:absolute;top:10px;left:50%;transform:translateX(-50%);width:90px;height:23px;border-radius:20px;background:#050a12;z-index:4}
+.screen{padding:52px 17px 16px;height:100%;overflow:hidden;border-radius:35px;background:linear-gradient(160deg,#10233b,#07111f)}
+.app-top{display:flex;justify-content:space-between;color:#94a6bd;font-size:10px}
+.app-title{margin-top:25px;font-size:13px;color:#9aaac0}.balance{font-family:"Space Grotesk";font-size:29px;font-weight:700;margin:5px 0 18px}
+.mini-card{padding:15px;border-radius:18px;background:linear-gradient(135deg,#19395a,#152544);border:1px solid rgba(255,255,255,.1)}
+.mini-label{font-size:9px;color:#91a4bc}.mini-value{font-size:17px;font-weight:700;margin-top:4px}
+.chart{height:90px;display:flex;align-items:end;gap:5px;margin-top:18px}
+.bar{flex:1;border-radius:5px 5px 2px 2px;background:linear-gradient(to top,var(--blue),var(--cyan));animation:bars 2s infinite alternate}
+.bar:nth-child(2){height:45%}.bar:nth-child(1){height:30%}.bar:nth-child(3){height:65%}.bar:nth-child(4){height:52%}.bar:nth-child(5){height:82%}.bar:nth-child(6){height:60%}.bar:nth-child(7){height:90%}
+@keyframes bars{to{filter:brightness(1.25);transform:scaleY(1.05)}}
+.tx{margin-top:20px;font-size:10px;color:#8ea1b8}.tx-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.floating{position:absolute;z-index:4;padding:15px 18px;border:1px solid var(--line);border-radius:18px;background:rgba(12,25,44,.78);backdrop-filter:blur(15px);box-shadow:0 20px 45px rgba(0,0,0,.25);animation:float 4s ease-in-out infinite}
+.floating strong{display:block;font-size:17px}.floating small{color:#8091a7;font-size:10px}
+.f1{top:75px;left:5%;animation-delay:-1s}.f2{right:0;top:190px;animation-delay:-2.5s}.f3{bottom:80px;left:0;animation-delay:-.5s}
+@keyframes float{50%{transform:translateY(-12px)}}
+
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:22px 0;background:#081321}
+.marquee-track{display:flex;gap:50px;width:max-content;animation:marquee 25s linear infinite;color:#75859b;font-size:13px;letter-spacing:2px;text-transform:uppercase}
+.marquee-track span:before{content:"✦";color:var(--cyan);margin-right:50px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+.light{background:#f5f8fc;color:#07111f}
+.section-tag{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#657891;font-weight:700;margin-bottom:17px}
+.section-title{font-family:"Space Grotesk";font-size:clamp(38px,5vw,62px);line-height:1.03;letter-spacing:-3px;max-width:800px}
+.section-copy{color:#708096;line-height:1.75;max-width:600px;margin-top:20px}
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:60px}
+.feature{padding:28px;border:1px solid #dce4ee;border-radius:24px;background:white;transition:.4s;min-height:220px}
+.feature:hover{transform:translateY(-10px);box-shadow:0 25px 50px rgba(16,36,65,.1)}
+.icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:#eaf4ff;font-size:21px;margin-bottom:40px}
+.feature h3{font-family:"Space Grotesk";font-size:18px;margin-bottom:8px}.feature p{font-size:13px;color:#74839a;line-height:1.6}
+
+.dark{background:#07111f}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:center}
+.visual-card{border:1px solid var(--line);border-radius:32px;background:linear-gradient(145deg,#0d1d31,#08121f);padding:28px;min-height:470px;position:relative;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.25)}
+.visual-card:after{content:"";position:absolute;width:250px;height:250px;border-radius:50%;background:var(--blue);filter:blur(100px);opacity:.15;right:-70px;bottom:-70px}
+.dashboard-top{display:flex;justify-content:space-between;align-items:center;color:#9db0c8;font-size:12px}
+.dashboard-top b{color:white;font-size:16px}
+.metric{margin-top:35px;display:flex;justify-content:space-between;align-items:end}.metric h3{font:700 42px "Space Grotesk"}.up{color:var(--green);font-size:12px}
+.line-chart{height:170px;margin-top:20px;position:relative;border-bottom:1px solid var(--line);background:repeating-linear-gradient(to bottom,transparent 0 41px,rgba(255,255,255,.05) 42px)}
+.line-chart svg{width:100%;height:100%;overflow:visible}
+.chart-line{fill:none;stroke:url(#g);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 3s .5s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.dash-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.dash-mini{padding:14px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid var(--line)}.dash-mini span{font-size:10px;color:#7f91a8}.dash-mini b{display:block;margin-top:5px}
+
+.check-list{margin-top:35px;display:grid;gap:16px}
+.check{display:flex;gap:13px;align-items:flex-start;color:#cbd6e5;line-height:1.5}
+.check i{width:25px;height:25px;flex:0 0 25px;border-radius:50%;display:grid;place-items:center;background:rgba(82,230,164,.13);color:var(--green);font-style:normal;font-size:12px}
+.dark .section-tag{color:#6e83a0}.dark .section-title{color:white}.dark .section-copy{color:#8fa0b6}
+
+.showcase{padding-bottom:50px}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:60px}
+.big-card{min-height:330px;padding:30px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));position:relative;overflow:hidden;transition:.4s}
+.big-card:hover{transform:translateY(-8px);border-color:rgba(50,215,255,.35)}
+.big-card h3{font:600 25px "Space Grotesk";margin-top:70px}.big-card p{color:#899bb2;line-height:1.65;margin-top:10px;font-size:14px}
+.orb{position:absolute;right:-40px;top:-45px;width:160px;height:160px;border-radius:50%;border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 0 50px rgba(50,215,255,.15)}
+.orb:after{content:"";position:absolute;inset:28px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));filter:blur(1px);box-shadow:0 0 50px rgba(50,215,255,.3)}
+
+.stats{background:linear-gradient(100deg,#10243a,#0b1728);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.stat b{font:700 clamp(35px,5vw,55px) "Space Grotesk";display:block}.stat span{color:#8091a8;font-size:13px}
+
+.story{background:#f5f8fc;color:#07111f}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.company-box{height:450px;border-radius:34px;background:linear-gradient(135deg,#dcefff,#efe6ff);position:relative;overflow:hidden}
+.company-box .ring{position:absolute;border:1px solid rgba(20,50,100,.14);border-radius:50%;width:500px;height:500px;top:-100px;left:-100px}
+.company-logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:140px;height:140px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#22c9ee,#745df5);font:700 50px "Space Grotesk";color:white;box-shadow:0 25px 70px rgba(74,93,230,.28)}
+.story-copy p{color:#708096;line-height:1.8;margin-top:20px}.pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}.pill{padding:9px 13px;border:1px solid #d8e1ec;border-radius:999px;background:white;font-size:12px;color:#5e7087}
+
+.faq{background:#07111f}.faq-list{margin-top:55px;max-width:900px}.faq-item{border-top:1px solid var(--line)}.faq-q{padding:24px 0;display:flex;justify-content:space-between;cursor:pointer;font:600 18px "Space Grotesk"}.faq-q span:last-child{color:#5d7cff;font-size:25px;transition:.3s}.faq-a{max-height:0;overflow:hidden;color:#8799b0;line-height:1.7;transition:max-height .4s,padding .4s}.faq-item.open .faq-a{max-height:150px;padding:0 0 24px}.faq-item.open .faq-q span:last-child{transform:rotate(45deg)}
+
+.cta{padding:130px 0;background:radial-gradient(circle at 50% 50%,rgba(93,124,255,.22),transparent 35%),#07111f;text-align:center;border-top:1px solid var(--line)}
+.cta h2{font:700 clamp(48px,7vw,82px) "Space Grotesk";letter-spacing:-4px}.cta p{color:#899ab0;max-width:580px;margin:20px auto 35px;line-height:1.7}
+footer{padding:55px 0 25px;background:#040b14;border-top:1px solid var(--line);color:#8392a8}.footer-top{display:flex;justify-content:space-between;gap:30px;padding-bottom:45px}.footer-brand p{max-width:300px;line-height:1.6;font-size:13px;margin-top:15px}.footer-links{display:flex;gap:60px}.footer-links div{display:grid;gap:12px;font-size:13px}.footer-links b{color:white;margin-bottom:5px}.bottom{border-top:1px solid var(--line);padding-top:20px;font-size:11px;display:flex;justify-content:space-between}
+
+.reveal{opacity:0;transform:translateY(45px);transition:opacity .8s ease,transform .8s ease}.reveal.visible{opacity:1;transform:none}
+.delay1{transition-delay:.12s}.delay2{transition-delay:.22s}.delay3{transition-delay:.32s}
+.cursor{position:fixed;width:18px;height:18px;border:1px solid rgba(50,215,255,.6);border-radius:50%;pointer-events:none;z-index:100;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .2s,height .2s;display:none}
+@media(pointer:fine){.cursor{display:block}}
+@media(max-width:900px){
+ .links{display:none}.menu{display:block}.nav-cta{display:none}
+ .hero-layout,.split,.story-grid{grid-template-columns:1fr;gap:50px}
+ .hero{padding-top:120px}.phone-wrap{height:520px}.phone{transform:rotate(2deg) scale(.9)}
+ .features-grid{grid-template-columns:repeat(2,1fr)}.cards3{grid-template-columns:1fr}
+ .stat-grid{grid-template-columns:repeat(2,1fr);gap:40px}.footer-top{flex-direction:column}.footer-links{flex-wrap:wrap}
+}
+@media(max-width:560px){
+ section{padding:85px 0}.container{width:min(100% - 28px,var(--max))}
+ h1{font-size:55px;letter-spacing:-3px}.hero-copy{font-size:16px}.hero-actions{flex-wrap:wrap}
+ .features-grid{grid-template-columns:1fr}.phone{width:245px;height:500px}.phone-wrap{height:520px}
+ .f1{left:0;top:30px}.f2{right:0;top:150px}.f3{left:0;bottom:25px}
+ .dash-row{grid-template-columns:1fr}.company-box{height:340px}.footer-links{gap:35px}.bottom{flex-direction:column;gap:10px}
+}
+</style>
+</head>
+<body>
+<div class="noise"></div><div class="cursor" id="cursor"></div>
+
+<nav id="nav">
+ <div class="container nav-inner">
+  <a class="brand" href="#home"><div class="logo">F</div> FINOVA</a>
+  <div class="links">
+   <a href="#features">Features</a><a href="#experience">Experience</a><a href="#company">Company</a><a href="#faq">FAQ</a>
+  </div>
+  <a href="#download" class="nav-cta">Get Finova ↗</a>
+  <button class="menu">☰</button>
+ </div>
+</nav>
+
+<main>
+<section class="hero" id="home">
+ <div class="hero-bg"></div><div class="grid"></div><div class="blob"></div>
+ <div class="container hero-layout">
+  <div class="reveal">
+   <div class="eyebrow"><span class="dot"></span> SMART FINANCE · BETTER DECISIONS</div>
+   <h1>Make your money<br><span class="gradient-text">make sense.</span></h1>
+   <p class="hero-copy">FINOVA is a modern personal finance companion built to help you understand your money, control your spending, build better habits and move confidently toward your goals.</p>
+   <div class="hero-actions"><a class="hero-btn" href="#features">Explore Finova <b>→</b></a><a class="ghost-btn" href="#experience">See how it works</a></div>
+   <p class="hero-note">One place for expenses · budgets · savings · goals · insights</p>
+  </div>
+  <div class="phone-wrap reveal delay1">
+   <div class="phone-glow"></div>
+   <div class="floating f1"><small>Monthly spending</small><strong>₹12,430 ↓ 18%</strong></div>
+   <div class="floating f2"><small>Savings goal</small><strong>72% complete</strong></div>
+   <div class="floating f3"><small>Net balance</small><strong>₹48,750 ↑ 12.5%</strong></div>
+   <div class="phone">
+    <div class="screen">
+     <div class="app-top"><span>9:41</span><span>●●●</span></div>
+     <div class="app-title">Good morning 👋</div><div class="balance">₹48,750</div>
+     <div class="mini-card"><div class="mini-label">MONTHLY OVERVIEW</div><div class="mini-value">₹32,840 <span style="font-size:10px;color:#52e6a4">+12%</span></div>
+      <div class="chart"><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i></div>
+     </div>
+     <div class="tx">RECENT TRANSACTIONS</div>
+     <div class="tx-row"><span>🛒 Groceries</span><b>-₹2,340</b></div>
+     <div class="tx-row"><span>💼 Salary</span><b style="color:#52e6a4">+₹48,000</b></div>
+     <div class="tx-row"><span>🚕 Travel</span><b>-₹850</b></div>
+     <div class="tx-row"><span>🎬 Entertainment</span><b>-₹620</b></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<div class="marquee"><div class="marquee-track">
+ <span>TRACK</span><span>BUDGET</span><span>SAVE</span><span>ANALYZE</span><span>PLAN</span><span>GROW</span><span>TRACK</span><span>BUDGET</span><span>SAVE</span><span>ANALYZE</span><span>PLAN</span><span>GROW</span>
+</div></div>
+
+<section class="light" id="features">
+ <div class="container">
+  <div class="reveal"><div class="section-tag">01 / Everything in one place</div><h2 class="section-title">Your entire financial life. Beautifully organised.</h2><p class="section-copy">From the coffee you bought this morning to the goal you're building for years from now, FINOVA brings your everyday finances together in one simple experience.</p></div>
+  <div class="features-grid">
+   <div class="feature reveal"><div class="icon">↗</div><h3>Smart Tracking</h3><p>See where your money goes without drowning in spreadsheets.</p></div>
+   <div class="feature reveal delay1"><div class="icon">◈</div><h3>Budgets</h3><p>Set realistic spending limits and know when you're getting close.</p></div>
+   <div class="feature reveal delay2"><div class="icon">◎</div><h3>Savings Goals</h3><p>Turn big plans into visible milestones you can actually follow.</p></div>
+   <div class="feature reveal delay3"><div class="icon">▣</div><h3>Wallets</h3><p>Keep cash, cards and different accounts organised in one view.</p></div>
+   <div class="feature reveal"><div class="icon">⌁</div><h3>Recurring</h3><p>Keep subscriptions and regular payments from becoming surprises.</p></div>
+   <div class="feature reveal delay1"><div class="icon">◫</div><h3>Receipt Scanner</h3><p>Digitise purchase information and keep your records cleaner.</p></div>
+   <div class="feature reveal delay2"><div class="icon">⌁</div><h3>Analytics</h3><p>Understand patterns, trends and habits behind your spending.</p></div>
+   <div class="feature reveal delay3"><div class="icon">✦</div><h3>Insights</h3><p>Turn financial data into decisions that feel easier to make.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="dark" id="experience">
+ <div class="container split">
+  <div class="reveal">
+   <div class="section-tag">02 / See your money differently</div>
+   <h2 class="section-title">Numbers become a story you can understand.</h2>
+   <p class="section-copy">FINOVA doesn't just collect transactions. It helps you see the bigger picture — what changed, where you're spending, and whether you're moving toward your goals.</p>
+   <div class="check-list">
+    <div class="check"><i>✓</i><span>Track income and expenses with a clean, simple flow.</span></div>
+    <div class="check"><i>✓</i><span>Visualise spending trends with easy-to-read analytics.</span></div>
+    <div class="check"><i>✓</i><span>Monitor savings, budgets and financial goals together.</span></div>
+    <div class="check"><i>✓</i><span>Build awareness without making finance feel complicated.</span></div>
+   </div>
+  </div>
+  <div class="visual-card reveal delay1">
+   <div class="dashboard-top"><b>Financial overview</b><span>THIS MONTH ▾</span></div>
+   <div class="metric"><div><span style="color:#8294aa;font-size:12px">TOTAL BALANCE</span><h3>₹48,750</h3></div><div class="up">↑ 12.5%</div></div>
+   <div class="line-chart">
+    <svg viewBox="0 0 600 170" preserveAspectRatio="none"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#32d7ff"/><stop offset="1" stop-color="#9b6cff"/></linearGradient></defs><path class="chart-line" d="M0 145 C55 120 65 135 110 112 S170 130 220 94 S280 112 320 75 S385 102 425 61 S480 80 525 42 S570 58 600 20"/></svg>
+   </div>
+   <div class="dash-row"><div class="dash-mini"><span>INCOME</span><b>₹62,400</b></div><div class="dash-mini"><span>EXPENSES</span><b>₹13,650</b></div><div class="dash-mini"><span>SAVED</span><b>₹8,900</b></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="dark showcase">
+ <div class="container">
+  <div class="reveal"><div class="section-tag">03 / Built for real life</div><h2 class="section-title">Small decisions. Bigger financial freedom.</h2><p class="section-copy">Finance management should fit into your life — not become another chore.</p></div>
+  <div class="cards3">
+   <div class="big-card reveal"><div class="orb"></div><div class="section-tag">01</div><h3>Know where it goes.</h3><p>Understand your spending categories and make the invisible patterns visible.</p></div>
+   <div class="big-card reveal delay1"><div class="orb"></div><div class="section-tag">02</div><h3>Plan before you spend.</h3><p>Use budgets and recurring payments to make your month predictable.</p></div>
+   <div class="big-card reveal delay2"><div class="orb"></div><div class="section-tag">03</div><h3>Build what comes next.</h3><p>Turn savings goals into a visual journey instead of a distant number.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="stats">
+ <div class="container stat-grid">
+  <div class="stat reveal"><b data-count="8">0</b><span>Core finance tools</span></div>
+  <div class="stat reveal delay1"><b data-count="100">0</b><span>% focused on simplicity</span></div>
+  <div class="stat reveal delay2"><b>24/7</b><span>Your financial overview</span></div>
+  <div class="stat reveal delay3"><b>1</b><span>Place for your money</span></div>
+ </div>
+</section>
+
+<section class="story" id="company">
+ <div class="container story-grid">
+  <div class="company-box reveal"><div class="ring"></div><div class="ring" style="width:350px;height:350px;top:50px;left:120px"></div><div class="company-logo">F</div></div>
+  <div class="story-copy reveal delay1">
+   <div class="section-tag">04 / The company behind Finova</div>
+   <h2 class="section-title">We're building finance tools people actually want to use.</h2>
+   <p>FINOVA is built around one simple idea: personal finance shouldn't feel intimidating. We want to make powerful financial management feel clear, modern and approachable — whether you're starting your journey or already managing multiple goals.</p>
+   <p>Our focus is simple design, useful information and technology that helps people make better everyday decisions with their money.</p>
+   <div class="pill-row"><span class="pill">Simplicity</span><span class="pill">Privacy</span><span class="pill">Innovation</span><span class="pill">User First</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="faq" id="faq">
+ <div class="container">
+  <div class="reveal"><div class="section-tag">05 / Questions</div><h2 class="section-title">Things you might want to know.</h2></div>
+  <div class="faq-list">
+   <div class="faq-item reveal"><div class="faq-q">What is FINOVA?<span>+</span></div><div class="faq-a">FINOVA is a personal finance management platform designed to bring expenses, budgets, savings goals, wallets, recurring payments and financial insights into one experience.</div></div>
+   <div class="faq-item reveal delay1"><div class="faq-q">Who is FINOVA for?<span>+</span></div><div class="faq-a">Anyone who wants a clearer view of their money — students, professionals, families, freelancers or anyone trying to build better financial habits.</div></div>
+   <div class="faq-item reveal delay2"><div class="faq-q">Can I manage multiple wallets?<span>+</span></div><div class="faq-a">FINOVA is designed around multiple wallets and accounts so you can keep different sources of money organised without losing the bigger picture.</div></div>
+   <div class="faq-item reveal delay3"><div class="faq-q">Does FINOVA replace a bank?<span>+</span></div><div class="faq-a">No. FINOVA is a financial management tool. It helps you understand and organise your finances; it is not a bank or a replacement for regulated financial services.</div></div>
+  </div>
+ </div>
+</section>
+
+<section class="cta" id="download">
+ <div class="container reveal">
+  <div class="section-tag">FINOVA</div>
+  <h2>Your money deserves<br><span class="gradient-text">a better system.</span></h2>
+  <p>Start understanding your money today. Track smarter, plan better and build the future you're working toward.</p>
+  <a class="hero-btn" href="#">Get started with Finova <b>→</b></a>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="container">
+  <div class="footer-top">
+   <div class="footer-brand"><a class="brand" href="#home"><div class="logo">F</div> FINOVA</a><p>Smart finance. Better decisions. A simpler way to understand and manage your money.</p></div>
+   <div class="footer-links">
+    <div><b>Product</b><a href="#features">Features</a><a href="#experience">Experience</a><a href="#download">Get Started</a></div>
+    <div><b>Company</b><a href="#company">About</a><a href="#faq">FAQ</a><a href="#">Contact</a></div>
+   </div>
+  </div>
+  <div class="bottom"><span>© 2026 FINOVA. All rights reserved.</span><span>Built for better financial decisions.</span></div>
+ </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30));
+
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+document.querySelectorAll('.faq-q').forEach(q=>{
+ q.addEventListener('click',()=>q.parentElement.classList.toggle('open'));
+});
+
+const counters=document.querySelectorAll('[data-count]');
+let counted=false;
+const countObserver=new IntersectionObserver(entries=>{
+ if(entries.some(e=>e.isIntersecting)&&!counted){
+  counted=true;
+  counters.forEach(el=>{
+   const target=+el.dataset.count;let n=0;
+   const step=Math.max(1,Math.ceil(target/45));
+   const timer=setInterval(()=>{
+    n+=step;if(n>=target){n=target;clearInterval(timer)}
+    el.textContent=n+(target===100?'%':'+');
+   },25);
+  });
+ }
+},{threshold:.5});
+countObserver.observe(document.querySelector('.stats'));
+
+const cursor=document.getElementById('cursor');
+window.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
+document.querySelectorAll('a,button,.faq-q,.feature,.big-card').forEach(el=>{
+ el.addEventListener('mouseenter',()=>{cursor.style.width='34px';cursor.style.height='34px'});
+ el.addEventListener('mouseleave',()=>{cursor.style.width='18px';cursor.style.height='18px'});
+});
+
+document.querySelector('.menu').addEventListener('click',()=>{
+ const links=document.querySelector('.links');
+ links.style.display=links.style.display==='flex'?'none':'flex';
+ links.style.position='absolute';links.style.top='78px';links.style.left='0';links.style.right='0';
+ links.style.padding='20px';links.style.background='rgba(7,17,31,.96)';links.style.flexDirection='column';
+});
+</script>
+</body>
+</html>
